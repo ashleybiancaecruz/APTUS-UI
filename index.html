@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aptus | Predictive Productivity Model</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #030712;
+      --bg-secondary: #0f172a;
+      --surface: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent-gold: #fbbf24;
+      --accent-blue: #3b82f6;
+      --accent-green: #22c55e;
+      --accent-red: #ef4444;
+      --accent-purple: #a855f7;
+    }
+   
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+   
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+   
+    .app-wrapper {
+      min-height: 100%;
+      width: 100%;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(168, 85, 247, 0.1), transparent),
+        radial-gradient(ellipse 50% 30% at 0% 100%, rgba(251, 191, 36, 0.08), transparent),
+        linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      overflow-y: auto;
+    }
+   
+    .glass-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+   
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.3), transparent);
+    }
+   
+    .mono { font-family: 'JetBrains Mono', monospace; }
+   
+    .glow-gold {
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.2), 0 0 60px rgba(251, 191, 36, 0.1);
+    }
+   
+    .glow-blue {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+   
+    .pulse-ring {
+      animation: pulse-ring 2s ease-out infinite;
+    }
+   
+    @keyframes pulse-ring {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+   
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+   
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+   
+    .score-glow {
+      text-shadow: 0 0 40px rgba(251, 191, 36, 0.5), 0 0 80px rgba(251, 191, 36, 0.3);
+    }
+   
+    .metric-bar {
+      height: 4px;
+      background: rgba(148, 163, 184, 0.2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+   
+    .metric-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+   
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+   
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+   
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+   
+    .scan-line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.4), transparent);
+      animation: scan 3s linear infinite;
+    }
+   
+    @keyframes scan {
+      0% { top: 0; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+   
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+   
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+   
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+   
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+   
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: particle-float 8s ease-in-out infinite;
+    }
+   
+    @keyframes particle-float {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+      25% { transform: translate(20px, -30px) scale(1.2); opacity: 0.8; }
+      50% { transform: translate(-10px, -50px) scale(0.8); opacity: 0.4; }
+      75% { transform: translate(30px, -20px) scale(1.1); opacity: 0.7; }
+    }
+   
+    .hexagon-bg {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cpath fill='%23334155' fill-opacity='0.05' d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/svg%3E");
+    }
+    .custom-scroll::-webkit-scrollbar { width: 4px; }
+    .custom-scroll::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.2); }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.3); border-radius: 10px; }
+   
+    .feed-card {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        transition: all 0.3s ease;
+    }
+    .feed-card:hover {
+        background: rgba(30, 41, 59, 0.6);
+        border-color: rgba(56, 189, 248, 0.4);
+    }
+
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+        animation: fadeIn 0.4s ease forwards;
+    }
+</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper hexagon-bg grid-bg">
+   <div class="particle" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+   <div class="particle" style="top: 30%; left: 80%; animation-delay: 2s;"></div>
+   <div class="particle" style="top: 60%; left: 10%; animation-delay: 4s;"></div>
+   <div class="particle" style="top: 80%; left: 70%; animation-delay: 6s;"></div>
+   <div class="max-w-7xl mx-auto p-6 lg:p-8">
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+     <div class="flex items-center gap-5">
+      <div class="relative">
+       <div class="absolute inset-0 bg-amber-400 rounded-2xl blur-xl opacity-30 pulse-ring"></div>
+       <div class="relative w-16 h-16 bg-gradient-to-br from-amber-300 to-amber-500 rounded-2xl flex items-center justify-center glow-gold float">
+        <svg class="w-8 h-8 text-slate-900" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /> <circle cx="12" cy="12" r="3" opacity="0.3" /> <path d="M12 6v2M12 16v2M6 12h2M16 12h2" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5" />
+        </svg>
+       </div>
+      </div>
+      <div>
+       <h1 id="app-title" class="text-2xl lg:text-3xl font-bold tracking-tight">APTUS <span class="text-amber-400"></span></h1>
+       <p id="app-subtitle" class="text-slate-400 text-xs font-semibold uppercase tracking-[0.2em] mt-1">Autonomous Cognitive Detection Engine</p>
+      </div>
+     </div>
+     
+     <div class="flex items-center gap-6">
+      <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50">
+       <div class="status-indicator bg-emerald-400"></div><span class="text-xs font-medium text-slate-300">SYSTEM ONLINE</span>
+      </div>
+      <div class="text-right">
+       <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">System Time</p>
+       <p id="current-date" class="mono text-sm text-amber-400/90"></p>
+      </div>
+     </div>
+    </header>
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+     <section class="lg:col-span-4 space-y-6">
+      <div class="glass-card card-hover p-6 border-l-4 border-amber-400">
+       <div class="scan-line"></div>
+       <h3 class="text-white text-sm font-bold mb-6 flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-amber-400/20 flex items-center justify-center">
+         <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewbox="0 0 24 24"><path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 3.21-1.92 6-4.72 7.28L13 17v5h5l-1.22-1.22C19.78 19.16 22 15.86 22 12c0-5.18-3.95-9.45-9-9.95zM11 2.05C5.94 2.55 2 6.81 2 12c0 3.86 2.22 7.16 5.22 8.78L6 22h5v-5l-2.28 2.28C6.92 18 5 15.21 5 12c0-4.08 3.05-7.44 7-7.93V2.05z" />
+         </svg>
+        </div> SYSTEM DETECTED PARAMETERS</h3>
+       <div class="space-y-5">
+        <div class="group">
+         <div class="flex justify-between items-center mb-2"><span class="text-slate-400 text-xs uppercase tracking-wide">App Switches</span> <span id="switch-display" class="mono text-amber-400 font-bold text-lg">0</span>
+         </div>
+         <div class="metric-bar">
+          <div id="switch-bar" class="metric-fill bg-gradient-to-r from-amber-500 to-amber-300" style="width: 0%"></div>
+         </div>
+        </div>
+        <div class="group">
+         <div class="flex justify-between items-center mb-2"><span class="text-slate-400 text-xs uppercase tracking-wide">Notifications</span> <span id="ping-display" class="mono text-blue-400 font-bold text-lg">0</span>
+         </div>
+         <div class="metric-bar">
+          <div id="ping-bar" class="metric-fill bg-gradient-to-r from-blue-500 to-blue-300" style="width: 0%"></div>
+         </div>
+        </div>
+        <div class="group">
+         <div class="flex justify-between items-center mb-2"><span class="text-slate-400 text-xs uppercase tracking-wide">Session Duration</span> <span id="duration-display" class="mono text-emerald-400 font-bold text-lg">0m</span>
+         </div>
+         <div class="metric-bar">
+          <div id="duration-bar" class="metric-fill bg-gradient-to-r from-emerald-500 to-emerald-300" style="width: 0%"></div>
+         </div>
+        </div>
+        <div class="group">
+         <div class="flex justify-between items-center mb-2"><span class="text-slate-400 text-xs uppercase tracking-wide">Deep Work Ratio</span> <span id="deepwork-display" class="mono text-purple-400 font-bold text-lg">100%</span>
+         </div>
+         <div class="metric-bar">
+          <div id="deepwork-bar" class="metric-fill bg-gradient-to-r from-purple-500 to-purple-300" style="width: 100%"></div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div id="history-items-container" class="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scroll"></div>
+      <div class="glass-card card-hover p-6">
+       <h3 class="text-slate-400 text-xs font-bold mb-4 uppercase tracking-widest flex items-center gap-2">
+        <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg> Cognitive Model</h3>
+       <p class="text-sm text-slate-300 leading-relaxed">APTUS employs a <span class="text-amber-400 font-semibold">cognitive friction model</span> to quantify productivity degradation from context switching. Each interruption triggers a measurable recovery cost.</p>
+       <div class="mt-4 p-3 rounded-lg bg-slate-800/50 border border-slate-700/30">
+        <p class="mono text-xs text-slate-400">FVS = 100 - (switches × 3.5) - (pings × 1.2)</p>
+       </div>
+      </div>
+     </section>
+     <section class="lg:col-span-8 space-y-6">
+      <div class="glass-card p-8 lg:p-12 text-center relative overflow-hidden">
+       <div class="absolute inset-0 opacity-5">
+        <svg class="w-full h-full" viewbox="0 0 100 100" preserveaspectratio="none"><defs>
+          <pattern id="neural" patternunits="userSpaceOnUse" width="20" height="20">
+           <circle cx="10" cy="10" r="1" fill="currentColor" />
+           <line x1="10" y1="10" x2="20" y2="0" stroke="currentColor" stroke-width="0.5" />
+           <line x1="10" y1="10" x2="20" y2="20" stroke="currentColor" stroke-width="0.5" />
+          </pattern>
+          </defs> <rect width="100" height="100" fill="url(#neural)" />
+        </svg>
+       </div>
+       <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.3em] mb-4">Focus Velocity Score</p>
+       <div class="relative inline-block mb-6">
+        <svg class="w-64 h-64 progress-ring" viewbox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(148, 163, 184, 0.1)" stroke-width="8" /> <circle id="progress-circle" class="progress-ring-circle" cx="60" cy="60" r="54" fill="none" stroke="url(#scoreGradient)" stroke-width="8" stroke-linecap="round" stroke-dasharray="339.292" stroke-dashoffset="0" /> <defs>
+          <lineargradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" stop-color="#fbbf24" />
+           <stop offset="100%" stop-color="#f59e0b" />
+          </lineargradient>
+          </defs>
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center">
+         <div>
+          <div id="fvs-display" class="text-7xl lg:text-8xl font-black text-white score-glow mono">
+           100
+          </div>
+          <div id="fvs-change" class="text-sm text-slate-400 mono mt-1"></div>
+         </div>
+        </div>
+       </div>
+       <div id="status-badge" class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+        <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div> Optimal Flow State
+       </div>
+       <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 border-t border-white/10 pt-8">
+        <div class="p-4 rounded-xl bg-slate-800/30">
+         <p class="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Context Penalty</p>
+         <p id="penalty-display" class="text-2xl font-bold text-red-400 mono">0%</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-800/30">
+         <p class="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Recovery Time</p>
+         <p id="recovery-display" class="text-2xl font-bold text-blue-400 mono">0m</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-800/30">
+         <p class="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Work Quality</p>
+         <p id="quality-display" class="text-2xl font-bold text-amber-400">Peak</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-800/30">
+         <p class="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Flow State</p>
+         <p id="flow-display" class="text-2xl font-bold text-emerald-400">Active</p>
+        </div>
+       </div>
+      </div>
+      <div class="glass-card card-hover p-6 border border-blue-500/20 glow-blue">
+       <div class="flex items-start gap-4">
+        <div class="p-3 bg-gradient-to-br from-blue-500/30 to-purple-500/30 rounded-xl">
+         <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 110 2h-1a7 7 0 01-7 7h-4a7 7 0 01-7-7H1a1 1 0 110-2h1a7 7 0 017-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 012-2zm0 6a5 5 0 00-5 5 5 5 0 005 5 5 5 0 005-5 5 5 0 00-5-5zm-1 2v3H8v2h3v3h2v-3h3v-2h-3v-3h-2z" />
+         </svg>
+        </div>
+        <div class="flex-1">
+         <h4 class="text-sm font-bold text-blue-400 uppercase tracking-wider mb-2 flex items-center gap-2"><span>Aptus AI Recommendation</span>
+          <div class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></div></h4>
+         <p id="recommendation-text" class="text-slate-300 text-sm leading-relaxed">Your cognitive state is optimal. Continue with deep work. Current conditions support sustained attention and high-quality output.</p>
+        </div>
+       </div>
+      </div>
+      <div class="glass-card card-hover p-6">
+       <h3 class="text-slate-400 text-xs font-bold mb-4 uppercase tracking-widest flex items-center gap-2">
+        <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M13 3a9 9 0 00-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0013 21a9 9 0 000-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" />
+        </svg> Activity Log</h3>
+       <div id="activity-log" class="space-y-2 max-h-40 overflow-y-auto">
+        <div class="text-xs text-slate-500 italic">
+          Session started. Monitoring cognitive patterns...
+        </div>
+       </div>
+      </div>
+      <div class="glass-card card-hover p-6 border-l-4 border-blue-400">
+    <h3 class="text-slate-400 text-xs font-bold mb-4 uppercase tracking-widest flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Event Timeline
+    </h3>
+   
+    <div id="history-items-container" class="space-y-4 max-h-60 overflow-y-auto pr-2 custom-scroll">
+        <div class="text-xs text-slate-500 italic">Analyzing event streams...</div>
+    </div>
+</div>
+     </section>
+    </main>
+    <footer class="mt-10 text-center text-slate-500 text-xs">
+     <p class="mono">APTUS • Cognitive Performance Analytics • Real-time Focus Optimization</p>
+    </footer>
+   </div>
+  </div>
+  <script>
+
+function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('theme-icon');
+        body.classList.toggle('light-mode');
+       
+        if (body.classList.contains('light-mode')) {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+        } else {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />';
+        }
+    }
+
+
+    const defaultConfig = {
+      app_title: 'APTUS ',
+      app_subtitle: 'Autonomous Cognitive Detection Engine',
+      background_color: '#030712',
+      surface_color: '#1e293b',
+      text_color: '#f8fafc',
+      primary_action_color: '#fbbf24',
+      secondary_action_color: '#3b82f6'
+    };
+   
+    let appSwitches = Math.floor(Math.random() * 8);
+    let notifications = Math.floor(Math.random() * 12);
+    let sessionStart = Date.now();
+   
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', options);
+    }
+   
+    function calculateFVS() {
+      const switchPenalty = appSwitches * 3.5;
+      const pingPenalty = notifications * 1.2;
+      return Math.max(0, Math.round(100 - switchPenalty - pingPenalty));
+    }
+   
+    function calculateRecoveryTime() {
+      return Math.round(appSwitches * 2.5 + notifications * 0.8);
+    }
+   
+    function getWorkQuality(fvs) {
+      if (fvs >= 90) return 'Peak';
+      if (fvs >= 75) return 'High';
+      if (fvs >= 50) return 'Moderate';
+      if (fvs >= 25) return 'Low';
+      return 'Critical';
+    }
+   
+    function getFlowState(fvs) {
+      if (fvs >= 90) return 'Active';
+      if (fvs >= 70) return 'Partial';
+      if (fvs >= 40) return 'Disrupted';
+      return 'Broken';
+    }
+   
+    function getStatusBadge(fvs) {
+      if (fvs >= 90) return { text: 'Optimal Flow State', color: 'emerald' };
+      if (fvs >= 70) return { text: 'Moderate Focus', color: 'amber' };
+      if (fvs >= 40) return { text: 'Focus Degraded', color: 'orange' };
+      return { text: 'Critical - Recovery Needed', color: 'red' };
+    }
+   
+    function getRecommendation(fvs, switches, pings) {
+      if (fvs >= 90) {
+        return 'Your cognitive state is optimal. Continue with deep work. Current conditions support sustained attention and high-quality output.';
+      } else if (fvs >= 70) {
+        return `Minor disruptions detected (${switches} switches, ${pings} notifications). Consider silencing notifications and closing unnecessary applications to restore peak focus.`;
+      } else if (fvs >= 40) {
+        return `Significant cognitive fragmentation detected. Recommend a 5-minute reset: close all tabs, practice box breathing, then return to a single priority task.`;
+      } else {
+        return `⚠️ Critical focus degradation. Immediate intervention required. Take a 15-minute break away from screens. Your brain needs recovery time to restore baseline cognitive function.`;
+      }
+    }
+   
+    function updateProgressRing(fvs) {
+      const circle = document.getElementById('progress-circle');
+      const circumference = 2 * Math.PI * 54;
+      const offset = circumference - (fvs / 100) * circumference;
+      circle.style.strokeDashoffset = offset;
+     
+      const colors = { high: '#22c55e', medium: '#fbbf24', low: '#f97316', critical: '#ef4444' };
+      let color = colors.high;
+      if (fvs < 90) color = colors.medium;
+      if (fvs < 70) color = colors.low;
+      if (fvs < 40) color = colors.critical;
+      circle.style.stroke = color;
+    }
+   
+    function addActivityEntry(type, message, customTime = null) {
+      const now = customTime || new Date();
+      const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+     
+      const colors = { switch: 'text-amber-400', ping: 'text-blue-400', reset: 'text-emerald-400', warning: 'text-red-400' };
+      const icons = { switch: '↔', ping: '🔔', reset: '↻', warning: '⚠' };
+     
+      const entry = document.createElement('div');
+      entry.className = `flex items-center gap-2 text-xs ${colors[type] || 'text-slate-400'}`;
+     
+      entry.innerHTML = `
+        <span class="mono text-slate-500">${time}</span>
+        <span>${icons[type] || '•'}</span>
+        <span>${message}</span>
+      `;
+     
+      const log = document.getElementById('activity-log');
+      log.insertBefore(entry, log.firstChild);
+      if (log.children.length > 25) { log.removeChild(log.lastChild); }
+    }
+
+
+    function generateHistory(sw, pg) {
+      const events = [];
+      const now = new Date();
+      for(let i=0; i<sw; i++) events.push({type: 'switch', msg: `Context switch detected`});
+      for(let i=0; i<pg; i++) events.push({type: 'ping', msg: `Notification received`});
+      events.sort(() => Math.random() - 0.5);
+      events.forEach((ev, index) => {
+        const pastTime = new Date(now.getTime() - (index + 1) * (Math.random() * 300000));
+        addActivityEntry(ev.type, ev.msg, pastTime);
+      });
+      addActivityEntry('reset', 'APTUS  initialized - Baseline established', new Date(now.getTime() - 3600000));
+    }
+   
+    function updateUI() {
+      const fvs = calculateFVS();
+      const recovery = calculateRecoveryTime();
+      const quality = getWorkQuality(fvs);
+      const flow = getFlowState(fvs);
+      const status = getStatusBadge(fvs);
+      const recommendation = getRecommendation(fvs, appSwitches, notifications);
+     
+      const elapsed = Math.round((Date.now() - sessionStart) / 60000);
+      const deepWork = Math.max(0, 100 - (appSwitches * 5) - (notifications * 2));
+     
+      document.getElementById('fvs-display').textContent = fvs;
+      document.getElementById('switch-display').textContent = appSwitches;
+      document.getElementById('ping-display').textContent = notifications;
+      document.getElementById('duration-display').textContent = `${elapsed}m`;
+      document.getElementById('deepwork-display').textContent = `${deepWork}%`;
+     
+      document.getElementById('switch-bar').style.width = `${Math.min(100, appSwitches * 10)}%`;
+      document.getElementById('ping-bar').style.width = `${Math.min(100, notifications * 10)}%`;
+      document.getElementById('duration-bar').style.width = `${Math.min(100, elapsed * 2)}%`;
+      document.getElementById('deepwork-bar').style.width = `${deepWork}%`;
+     
+      document.getElementById('penalty-display').textContent = `${Math.round(100 - fvs)}%`;
+      document.getElementById('recovery-display').textContent = `${recovery}m`;
+      document.getElementById('quality-display').textContent = quality;
+      document.getElementById('flow-display').textContent = flow;
+     
+      const qualityColors = { Peak: 'text-amber-400', High: 'text-emerald-400', Moderate: 'text-blue-400', Low: 'text-orange-400', Critical: 'text-red-400' };
+      const flowColors = { Active: 'text-emerald-400', Partial: 'text-amber-400', Disrupted: 'text-orange-400', Broken: 'text-red-400' };
+     
+      document.getElementById('quality-display').className = `text-2xl font-bold ${qualityColors[quality]} mono`;
+      document.getElementById('flow-display').className = `text-2xl font-bold ${flowColors[flow]} mono`;
+     
+      const statusBadge = document.getElementById('status-badge');
+      const statusColors = {
+        emerald: 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400',
+        amber: 'bg-amber-500/20 border-amber-500/30 text-amber-400',
+        orange: 'bg-orange-500/20 border-orange-500/30 text-orange-400',
+        red: 'bg-red-500/20 border-red-500/30 text-red-400'
+      };
+      statusBadge.className = `inline-flex items-center gap-2 px-5 py-2 rounded-full border text-xs font-bold uppercase tracking-wider ${statusColors[status.color]}`;
+      statusBadge.innerHTML = `<div class="w-2 h-2 rounded-full bg-${status.color}-400 animate-pulse"></div>${status.text}`;
+     
+      document.getElementById('recommendation-text').textContent = recommendation;
+      updateProgressRing(fvs);
+    }
+   
+    async function onConfigChange(config) {
+      const title = config.app_title || defaultConfig.app_title;
+      const subtitle = config.app_subtitle || defaultConfig.app_subtitle;
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+     
+      document.getElementById('app-title').innerHTML = title.replace(/(V[\d.]+)/, '<span class="text-amber-400">$1</span>');
+      document.getElementById('app-subtitle').textContent = subtitle;
+     
+      document.documentElement.style.setProperty('--bg-primary', bgColor);
+      document.documentElement.style.setProperty('--surface', surfaceColor);
+      document.documentElement.style.setProperty('--text-primary', textColor);
+      document.documentElement.style.setProperty('--accent-gold', primaryColor);
+      document.documentElement.style.setProperty('--accent-blue', secondaryColor);
+    }
+   
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+          { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+          { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+          { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+          { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+        ]
+      };
+    }
+   
+    function mapToEditPanelValues(config) {
+      return new Map([['app_title', config.app_title || defaultConfig.app_title], ['app_subtitle', config.app_subtitle || defaultConfig.app_subtitle]]);
+    }
+   
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+    setInterval(updateUI, 60000);
+   
+    generateHistory(appSwitches, notifications);
+    updateUI();
+   
+    if (window.elementSdk) {
+      window.elementSdk.init({ defaultConfig, onConfigChange, mapToCapabilities, mapToEditPanelValues });
+    }
+ 
+
+
+    function renderActivityHistory() {
+    const container = document.getElementById('history-items-container');
+    if (!container) return;
+
+
+    const apps = [
+        { name: "Visual Studio Code", icon: "💻" },
+        { name: "Google Scholar", icon: "🌐" },
+        { name: "Faculty Email", icon: "✉️" },
+        { name: "Chapter 1–3 Review", icon: "📝" },
+        { name: "Stack Overflow", icon: "🛠️" },
+        { name: "Terminal / Bash", icon: "🐚" },
+        { name: "Discord / Slack", icon: "💬" }
+    ];
+
+
+    const headerHTML = `
+        <div class="mb-4 space-y-4">
+            <input type="text" placeholder="Search activity..." class="w-full bg-slate-900/50 border border-slate-700/30 rounded-lg px-3 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-sky-500/50">
+            <div class="flex gap-2">
+                <button class="px-4 py-1 rounded-lg bg-sky-500 text-slate-900 text-[10px] font-bold">Today</button>
+                <button class="px-4 py-1 rounded-lg bg-slate-800 text-slate-400 text-[10px]">Mar 11</button>
+                <button class="px-4 py-1 rounded-lg bg-slate-800 text-slate-400 text-[10px]">Mar 10</button>
+            </div>
+        </div>
+    `;
+
+
+    let itemsHTML = '';
+    const numLogs = 5 + Math.floor(Math.random() * 5); 
+
+
+    for (let i = 0; i < numLogs; i++) {
+        const app = apps[Math.floor(Math.random() * apps.length)];
+        const isHighSwitch = Math.random() > 0.7; 
+       
+        const startHour = 8 + Math.floor(Math.random() * 4);
+        const startMin = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+        const durationMin = 5 + Math.floor(Math.random() * 115);
+       
+        const borderClass = isHighSwitch ? 'border-l-4 border-l-red-500' : '';
+        const statusText = isHighSwitch ? '<span class="text-red-400 font-medium ml-1">(High Switch)</span>' : '';
+
+
+        itemsHTML += `
+            <div class="feed-card rounded-xl p-4 mb-3 ${borderClass} animate-fade-in" style="animation-delay: ${i * 0.1}s">
+                <p class="text-[10px] font-bold text-sky-400 tracking-wider uppercase">${startHour}:${startMin} AM - Detected</p>
+                <div class="flex items-center gap-3 mt-1">
+                    <span class="text-sky-400 text-sm">${app.icon}</span>
+                    <h4 class="text-sm font-bold text-slate-200">${app.name}</h4>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Duration: ${durationMin}m ${statusText}</p>
+            </div>
+        `;
+    }
+
+
+    container.innerHTML = headerHTML + `<div class="mt-2">${itemsHTML}</div>`;
+}
+
+
+renderActivityHistory();
+  </script>
+ </body>
+</html>
+
