@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Aptus{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg-primary:#cfe8ff; --bg-secondary:#9ec9ff; --text-primary:#1f2937; --text-secondary:#4b5563; --accent-blue:#60a5fa; --accent-gray:#64748b; --accent-soft:#e2e8f0; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; font-family: 'Space Grotesk', sans-serif; background: radial-gradient(circle at top right,#dbeafe 0%,#bcdfff 45%,#9ac8ff 100%); color: #1f2937; }
+    .glass { background: rgba(255,255,255,0.7); border: 1px solid rgba(148, 163, 184, 0.35); backdrop-filter: blur(12px); border-radius: 1rem; color: #1f2937; }
+    .btn { font-weight: 700; border-radius: 999px; padding: 0.6rem 1.2rem; border: none; cursor: pointer; transition: transform .15s ease, box-shadow .2s ease; background: #475569; color: #f8fafc; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+    .error { color:#dc2626; font-weight:600; }
+    .success { color:#047857; font-weight:600; }
+    .mono { font-family:'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="h-full">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-5xl">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="mb-3">
+        {% for category, msg in messages %}
+          <div class="text-sm {{ 'error' if category=='error' else 'success' }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</body>
+</html>

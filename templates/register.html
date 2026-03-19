@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Register | Aptus{% endblock %}
+{% block content %}
+<div class="glass p-6 lg:p-8">
+  <div class="flex justify-between items-center">
+    <div>
+      <p class="text-xs uppercase tracking-[0.2em] text-slate-700">Create account</p>
+      <h2 class="text-2xl font-bold mt-1 text-slate-700">Register for Aptus</h2>
+      <p class="text-slate-700 mt-2">Use your laptop account or email to sign up and continue to the productivity dashboard.</p>
+    </div>
+    <a href="{{ url_for('login') }}" class="btn bg-slate-400 text-slate-900">Already have account</a>
+  </div>
+  <form method="post" class="mt-6 space-y-4">
+    <div>
+      <label class="block text-slate-300 text-sm">Full Name</label>
+      <input name="name" required class="w-full mt-1 rounded-lg border border-slate-500 bg-slate-900 px-3 py-2 text-white" placeholder="Your full name" />
+    </div>
+    <div>
+      <label class="block text-slate-300 text-sm">Email</label>
+      <input name="email" type="email" required class="w-full mt-1 rounded-lg border border-slate-500 bg-slate-900 px-3 py-2 text-white" placeholder="you@laptop.com" />
+    </div>
+    <div>
+      <label class="block text-slate-300 text-sm">Password</label>
+      <input name="password" type="password" required class="w-full mt-1 rounded-lg border border-slate-500 bg-slate-900 px-3 py-2 text-white" placeholder="Choose a strong password" />
+    </div>
+    <button class="btn bg-sky-400 text-slate-900" type="submit">Register Now</button>
+  </form>
+</div>
+{% endblock %}

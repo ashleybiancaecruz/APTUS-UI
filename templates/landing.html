@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Aptus Landing{% endblock %}
+{% block content %}
+<div class="glass p-8 lg:p-10">
+  <div class="flex flex-col lg:flex-row justify-between items-start gap-6">
+    <div>
+      <p class="text-xs uppercase tracking-[0.2em] text-slate-700">Autonomous Cognitive Detection</p>
+      <h1 class="text-4xl font-bold mt-2 text-slate-700">Welcome to Aptus</h1>
+      <p class="mt-3 text-slate-700 max-w-xl">Track your productivity and reduce context-switching with a predictive model. Register an account or log in with your existing email to start your personalized focus journey.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="{{ url_for('register') }}" class="btn bg-slate-400 text-slate-900">Register Now</a>
+        <a href="{{ url_for('login') }}" class="btn bg-slate-700 text-white">Log In Now</a>
+      </div>
+    </div>
+    <div class="bg-slate-900/60 border border-slate-600 p-4 rounded-xl w-full lg:w-1/2">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-sky-300 to-sky-500 flex items-center justify-center">⚡</div>
+        <div><p class="text-slate-700 text-xs uppercase tracking-wide">Today</p><p class="font-bold text-lg text-slate-700">Focus Score 87</p></div>
+      </div>
+      <div class="mt-4 space-y-2 text-slate-700 text-sm">
+        <div class="flex justify-between"><span>Context switches</span><span class="text-sky-500">2</span></div>
+        <div class="flex justify-between"><span>Deep work streak</span><span class="text-slate-700">58m</span></div>
+        <div class="flex justify-between"><span>Notifications</span><span class="text-sky-500">4</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

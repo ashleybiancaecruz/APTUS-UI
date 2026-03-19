@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aptus | Landing Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; min-height:100vh; font-family:'Space Grotesk',sans-serif; background: radial-gradient(circle at 20% 20%, #1e334b, #101b2e 45%, #0b1222 100%); color:#e2e8f0; }
+    .glass { background: rgba(15,23,42,0.72); border:1px solid rgba(148,163,184,0.25); backdrop-filter:blur(10px); border-radius:1rem; }
+    .btn { font-weight:700; border-radius:999px; padding:.65rem 1.3rem; border:none; cursor:pointer; transition:transform .15s ease, box-shadow .2s ease; background:#60a5fa; color:#0f172a; }
+    .btn:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(0,0,0,.3); }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="glass w-full max-w-4xl p-6 md:p-10">
+      <div class="flex flex-col md:flex-row md:justify-between gap-5">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-slate-300">Autonomous Cognitive Detection</p>
+          <h1 class="mt-3 text-4xl md:text-5xl font-bold text-white">Welcome to Aptus</h1>
+          <p class="mt-4 text-slate-300 max-w-xl">Aptus is your productivity intelligence engine. Register your account, log in with your email/laptop account, and explore the productivity insights in index.html.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="/register" class="btn bg-sky-400 text-slate-900">Register Now</a>
+            <a href="/login" class="btn bg-slate-700 text-white">Log In Now</a>
+            <a href="/dashboard" class="btn bg-cyan-400 text-slate-900">Go to App Result</a>
+          </div>
+        </div>
+        <div class="bg-slate-900/60 border border-slate-600 p-4 rounded-xl w-full md:w-1/2">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-300 to-amber-500 flex items-center justify-center">⚡</div>
+            <div><p class="text-slate-300 text-xs uppercase tracking-wide">Today</p><p class="font-bold text-lg">Focus Score 87</p></div>
+          </div>
+          <div class="mt-4 space-y-2 text-slate-200 text-sm">
+            <div class="flex justify-between"><span>Context switches</span><span class="text-amber-300">2</span></div>
+            <div class="flex justify-between"><span>Deep work streak</span><span class="text-emerald-300">58m</span></div>
+            <div class="flex justify-between"><span>Notifications</span><span class="text-blue-300">4</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

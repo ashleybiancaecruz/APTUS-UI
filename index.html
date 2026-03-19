@@ -9,16 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #030712;
-      --bg-secondary: #0f172a;
-      --surface: #1e293b;
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --accent-gold: #fbbf24;
-      --accent-blue: #3b82f6;
-      --accent-green: #22c55e;
-      --accent-red: #ef4444;
-      --accent-purple: #a855f7;
+      --bg-primary: #cae8ff;
+      --bg-secondary: #9ec9ff;
+      --surface: #dbeafe;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --accent-blue: #64748b;
+      --accent-cool: #94a3b8;
+      --accent-gray: #64748b;
+      --accent-soft: #e2e8f0;
     }
    
     html, body {
@@ -29,7 +28,7 @@
    
     body {
       font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg-primary);
+      background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
       color: var(--text-primary);
       overflow-x: hidden;
       transition: background-color 0.5s ease, color 0.5s ease;
@@ -67,8 +66,8 @@
    
     .mono { font-family: 'JetBrains Mono', monospace; }
    
-    .glow-gold {
-      box-shadow: 0 0 30px rgba(251, 191, 36, 0.2), 0 0 60px rgba(251, 191, 36, 0.1);
+    .glow-blue {
+      box-shadow: 0 0 30px rgba(96, 165, 250, 0.2), 0 0 60px rgba(96, 165, 250, 0.1);
     }
    
     .glow-blue {
@@ -216,64 +215,67 @@
     <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
      <div class="flex items-center gap-5">
       <div class="relative">
-       <div class="absolute inset-0 bg-amber-400 rounded-2xl blur-xl opacity-30 pulse-ring"></div>
-       <div class="relative w-16 h-16 bg-gradient-to-br from-amber-300 to-amber-500 rounded-2xl flex items-center justify-center glow-gold float">
+       <div class="absolute inset-0 bg-sky-400 rounded-2xl blur-xl opacity-30 pulse-ring"></div>
+       <div class="relative w-16 h-16 bg-gradient-to-br from-sky-300 to-sky-500 rounded-2xl flex items-center justify-center glow-blue float">
         <svg class="w-8 h-8 text-slate-900" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /> <circle cx="12" cy="12" r="3" opacity="0.3" /> <path d="M12 6v2M12 16v2M6 12h2M16 12h2" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5" />
         </svg>
        </div>
       </div>
       <div>
-       <h1 id="app-title" class="text-2xl lg:text-3xl font-bold tracking-tight">APTUS <span class="text-amber-400"></span></h1>
-       <p id="app-subtitle" class="text-slate-400 text-xs font-semibold uppercase tracking-[0.2em] mt-1">Autonomous Cognitive Detection Engine</p>
+       <h1 id="app-title" class="text-2xl lg:text-3xl font-bold tracking-tight">APTUS <span class="text-slate-700"></span></h1>
+       <p id="app-subtitle" class="text-slate-700 text-xs font-semibold uppercase tracking-[0.2em] mt-1">Autonomous Cognitive Detection Engine</p>
       </div>
      </div>
      
      <div class="flex items-center gap-6">
       <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50">
-       <div class="status-indicator bg-emerald-400"></div><span class="text-xs font-medium text-slate-300">SYSTEM ONLINE</span>
+       <div class="status-indicator bg-slate-500"></div><span class="text-xs font-medium text-slate-700">SYSTEM ONLINE</span>
       </div>
       <div class="text-right">
        <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">System Time</p>
-       <p id="current-date" class="mono text-sm text-amber-400/90"></p>
+       <p id="current-date" class="mono text-sm text-slate-700/90"></p>
       </div>
+     </div>
+     <div class="mt-3">
+      <a href="./landing.html" class="inline-flex items-center gap-2 text-xs uppercase font-semibold tracking-wide text-slate-200 bg-slate-800/60 border border-slate-600 px-3 py-1.5 rounded-full hover:bg-slate-700">← Back to Landing</a>
      </div>
     </header>
     <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
      <section class="lg:col-span-4 space-y-6">
-      <div class="glass-card card-hover p-6 border-l-4 border-amber-400">
+      <div class="glass-card card-hover p-6 border-l-4 border-sky-400">
        <div class="scan-line"></div>
-       <h3 class="text-white text-sm font-bold mb-6 flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-amber-400/20 flex items-center justify-center">
-         <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewbox="0 0 24 24"><path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 3.21-1.92 6-4.72 7.28L13 17v5h5l-1.22-1.22C19.78 19.16 22 15.86 22 12c0-5.18-3.95-9.45-9-9.95zM11 2.05C5.94 2.55 2 6.81 2 12c0 3.86 2.22 7.16 5.22 8.78L6 22h5v-5l-2.28 2.28C6.92 18 5 15.21 5 12c0-4.08 3.05-7.44 7-7.93V2.05z" />
+       <h3 class="text-slate-700 text-sm font-bold mb-6 flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-slate-300/20 flex items-center justify-center">
+         <svg class="w-4 h-4 text-sky-300" fill="currentColor" viewbox="0 0 24 24"><path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 3.21-1.92 6-4.72 7.28L13 17v5h5l-1.22-1.22C19.78 19.16 22 15.86 22 12c0-5.18-3.95-9.45-9-9.95zM11 2.05C5.94 2.55 2 6.81 2 12c0 3.86 2.22 7.16 5.22 8.78L6 22h5v-5l-2.28 2.28C6.92 18 5 15.21 5 12c0-4.08 3.05-7.44 7-7.93V2.05z" />
          </svg>
         </div> SYSTEM DETECTED PARAMETERS</h3>
        <div class="space-y-5">
         <div class="group">
-         <div class="flex justify-between items-center mb-2"><span class="text-slate-400 text-xs uppercase tracking-wide">App Switches</span> <span id="switch-display" class="mono text-amber-400 font-bold text-lg">0</span>
+         <div class="flex justify-between items-center mb-2"><span class="text-slate-700 text-xs uppercase tracking-wide">App Switches</span> <span id="switch-display" class="mono text-slate-700 font-bold text-lg">0</span>
          </div>
          <div class="metric-bar">
-          <div id="switch-bar" class="metric-fill bg-gradient-to-r from-amber-500 to-amber-300" style="width: 0%"></div>
+          <div id="switch-bar" class="metric-fill bg-gradient-to-r from-sky-500 to-sky-300" style="width: 0%"></div>
          </div>
         </div>
         <div class="group">
-         <div class="flex justify-between items-center mb-2"><span class="text-slate-400 text-xs uppercase tracking-wide">Notifications</span> <span id="ping-display" class="mono text-blue-400 font-bold text-lg">0</span>
+         <div class="flex justify-between items-center mb-2"><span class="text-slate-700 text-xs uppercase tracking-wide">Notifications</span> <span id="ping-display" class="mono text-slate-700 font-bold text-lg">0</span>
          </div>
          <div class="metric-bar">
           <div id="ping-bar" class="metric-fill bg-gradient-to-r from-blue-500 to-blue-300" style="width: 0%"></div>
          </div>
         </div>
         <div class="group">
-         <div class="flex justify-between items-center mb-2"><span class="text-slate-400 text-xs uppercase tracking-wide">Session Duration</span> <span id="duration-display" class="mono text-emerald-400 font-bold text-lg">0m</span>
+         <div class="flex justify-between items-center mb-2"><span class="text-slate-400 text-xs uppercase tracking-wide">Session Duration</span> <span id="duration-display" class="mono text-sky-300 font-bold text-lg">0m</span>
          </div>
          <div class="metric-bar">
-          <div id="duration-bar" class="metric-fill bg-gradient-to-r from-emerald-500 to-emerald-300" style="width: 0%"></div>
+          <div id="duration-bar" class="metric-fill bg-gradient-to-r from-sky-500 to-sky-300" style="width: 0%"></div>
          </div>
         </div>
         <div class="group">
-         <div class="flex justify-between items-center mb-2"><span class="text-slate-400 text-xs uppercase tracking-wide">Deep Work Ratio</span> <span id="deepwork-display" class="mono text-purple-400 font-bold text-lg">100%</span>
+         <div class="flex justify-between items-center mb-2"><span class="text-slate-700 text-xs uppercase tracking-wide">Deep Work Ratio</span> <span id="deepwork-display" class="mono text-slate-700 font-bold text-lg">100%</span>
          </div>
          <div class="metric-bar">
-          <div id="deepwork-bar" class="metric-fill bg-gradient-to-r from-purple-500 to-purple-300" style="width: 100%"></div>
+          <div id="deepwork-bar" class="metric-fill bg-gradient-to-r from-sky-500 to-sky-300" style="width: 100%"></div>
          </div>
         </div>
        </div>
@@ -283,7 +285,7 @@
        <h3 class="text-slate-400 text-xs font-bold mb-4 uppercase tracking-widest flex items-center gap-2">
         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg> Cognitive Model</h3>
-       <p class="text-sm text-slate-300 leading-relaxed">APTUS employs a <span class="text-amber-400 font-semibold">cognitive friction model</span> to quantify productivity degradation from context switching. Each interruption triggers a measurable recovery cost.</p>
+       <p class="text-sm text-slate-300 leading-relaxed">APTUS employs a <span class="text-sky-300 font-semibold">cognitive friction model</span> to quantify productivity degradation from context switching. Each interruption triggers a measurable recovery cost.</p>
        <div class="mt-4 p-3 rounded-lg bg-slate-800/50 border border-slate-700/30">
         <p class="mono text-xs text-slate-400">FVS = 100 - (switches × 3.5) - (pings × 1.2)</p>
        </div>
@@ -319,13 +321,13 @@
          </div>
         </div>
        </div>
-       <div id="status-badge" class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-        <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div> Optimal Flow State
+       <div id="status-badge" class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-sky-500/20 border border-sky-500/30 text-sky-300 text-xs font-bold uppercase tracking-wider">
+        <div class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></div> Optimal Flow State
        </div>
        <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 border-t border-white/10 pt-8">
         <div class="p-4 rounded-xl bg-slate-800/30">
          <p class="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Context Penalty</p>
-         <p id="penalty-display" class="text-2xl font-bold text-red-400 mono">0%</p>
+         <p id="penalty-display" class="text-2xl font-bold text-slate-300 mono">0%</p>
         </div>
         <div class="p-4 rounded-xl bg-slate-800/30">
          <p class="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Recovery Time</p>
@@ -333,17 +335,17 @@
         </div>
         <div class="p-4 rounded-xl bg-slate-800/30">
          <p class="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Work Quality</p>
-         <p id="quality-display" class="text-2xl font-bold text-amber-400">Peak</p>
+         <p id="quality-display" class="text-2xl font-bold text-sky-300">Peak</p>
         </div>
         <div class="p-4 rounded-xl bg-slate-800/30">
          <p class="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Flow State</p>
-         <p id="flow-display" class="text-2xl font-bold text-emerald-400">Active</p>
+         <p id="flow-display" class="text-2xl font-bold text-sky-300">Active</p>
         </div>
        </div>
       </div>
       <div class="glass-card card-hover p-6 border border-blue-500/20 glow-blue">
        <div class="flex items-start gap-4">
-        <div class="p-3 bg-gradient-to-br from-blue-500/30 to-purple-500/30 rounded-xl">
+        <div class="p-3 bg-gradient-to-br from-sky-500/30 to-slate-500/30 rounded-xl">
          <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 110 2h-1a7 7 0 01-7 7h-4a7 7 0 01-7-7H1a1 1 0 110-2h1a7 7 0 017-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 012-2zm0 6a5 5 0 00-5 5 5 5 0 005 5 5 5 0 005-5 5 5 0 00-5-5zm-1 2v3H8v2h3v3h2v-3h3v-2h-3v-3h-2z" />
          </svg>
         </div>
@@ -444,10 +446,10 @@ function toggleTheme() {
     }
    
     function getStatusBadge(fvs) {
-      if (fvs >= 90) return { text: 'Optimal Flow State', color: 'emerald' };
-      if (fvs >= 70) return { text: 'Moderate Focus', color: 'amber' };
-      if (fvs >= 40) return { text: 'Focus Degraded', color: 'orange' };
-      return { text: 'Critical - Recovery Needed', color: 'red' };
+      if (fvs >= 90) return { text: 'Optimal Flow State', color: 'sky' };
+      if (fvs >= 70) return { text: 'Moderate Focus', color: 'sky' };
+      if (fvs >= 40) return { text: 'Focus Degraded', color: 'slate' };
+      return { text: 'Critical - Recovery Needed', color: 'gray' };
     }
    
     function getRecommendation(fvs, switches, pings) {
@@ -480,7 +482,7 @@ function toggleTheme() {
       const now = customTime || new Date();
       const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
      
-      const colors = { switch: 'text-amber-400', ping: 'text-blue-400', reset: 'text-emerald-400', warning: 'text-red-400' };
+      const colors = { switch: 'text-sky-300', ping: 'text-sky-300', reset: 'text-slate-200', warning: 'text-slate-300' };
       const icons = { switch: '↔', ping: '🔔', reset: '↻', warning: '⚠' };
      
       const entry = document.createElement('div');
@@ -538,18 +540,17 @@ function toggleTheme() {
       document.getElementById('quality-display').textContent = quality;
       document.getElementById('flow-display').textContent = flow;
      
-      const qualityColors = { Peak: 'text-amber-400', High: 'text-emerald-400', Moderate: 'text-blue-400', Low: 'text-orange-400', Critical: 'text-red-400' };
-      const flowColors = { Active: 'text-emerald-400', Partial: 'text-amber-400', Disrupted: 'text-orange-400', Broken: 'text-red-400' };
+      const qualityColors = { Peak: 'text-sky-300', High: 'text-sky-300', Moderate: 'text-sky-300', Low: 'text-slate-300', Critical: 'text-slate-200' };
+      const flowColors = { Active: 'text-sky-300', Partial: 'text-sky-300', Disrupted: 'text-slate-300', Broken: 'text-slate-200' };
      
       document.getElementById('quality-display').className = `text-2xl font-bold ${qualityColors[quality]} mono`;
       document.getElementById('flow-display').className = `text-2xl font-bold ${flowColors[flow]} mono`;
      
       const statusBadge = document.getElementById('status-badge');
       const statusColors = {
-        emerald: 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400',
-        amber: 'bg-amber-500/20 border-amber-500/30 text-amber-400',
-        orange: 'bg-orange-500/20 border-orange-500/30 text-orange-400',
-        red: 'bg-red-500/20 border-red-500/30 text-red-400'
+        sky: 'bg-sky-500/20 border-sky-500/30 text-sky-300',
+        slate: 'bg-slate-500/20 border-slate-500/30 text-slate-200',
+        gray: 'bg-slate-400/20 border-slate-400/30 text-slate-200'
       };
       statusBadge.className = `inline-flex items-center gap-2 px-5 py-2 rounded-full border text-xs font-bold uppercase tracking-wider ${statusColors[status.color]}`;
       statusBadge.innerHTML = `<div class="w-2 h-2 rounded-full bg-${status.color}-400 animate-pulse"></div>${status.text}`;
@@ -567,7 +568,7 @@ function toggleTheme() {
       const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
       const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
      
-      document.getElementById('app-title').innerHTML = title.replace(/(V[\d.]+)/, '<span class="text-amber-400">$1</span>');
+      document.getElementById('app-title').innerHTML = title.replace(/(V[\d.]+)/, '<span class="text-sky-300">$1</span>');
       document.getElementById('app-subtitle').textContent = subtitle;
      
       document.documentElement.style.setProperty('--bg-primary', bgColor);
@@ -646,8 +647,8 @@ function toggleTheme() {
         const startMin = Math.floor(Math.random() * 60).toString().padStart(2, '0');
         const durationMin = 5 + Math.floor(Math.random() * 115);
        
-        const borderClass = isHighSwitch ? 'border-l-4 border-l-red-500' : '';
-        const statusText = isHighSwitch ? '<span class="text-red-400 font-medium ml-1">(High Switch)</span>' : '';
+        const borderClass = isHighSwitch ? 'border-l-4 border-l-slate-400' : '';
+        const statusText = isHighSwitch ? '<span class="text-slate-300 font-medium ml-1">(High Switch)</span>' : '';
 
 
         itemsHTML += `
